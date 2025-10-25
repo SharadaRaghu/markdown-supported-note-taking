@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -71,3 +72,7 @@ export default defineConfig([
   },
 ])
 ```
+=======
+# markdown-supported-note-taking
+Note taking with : Categories, markdown support, filter
+>>>>>>> 8fb68df0e273a449ffb344edee8d0514aec0059f
