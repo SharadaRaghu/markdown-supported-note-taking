@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import CreatableReactSelect from "react-select/creatable";
-import type{ NoteData, Tag } from "../App";
+import type { NoteData, Tag } from "../App";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -10,15 +10,16 @@ type NoteFormProps = {
   onSubmit: (data: NoteData) => void;
   onAddTag : (tag : Tag) => void;
   availableTags : Tag[]
-}
+} & Partial<NoteData>
+//Partial makes all properties of NoteData optional
 
-export function NoteForm( {onSubmit, onAddTag, availableTags}: NoteFormProps) {
+export function NoteForm( {onSubmit, onAddTag, availableTags, title = "", markdown = "", tags = []}: NoteFormProps) {
 
 //titleRef and markdownRef to access form values and submit the form
 const titleRef = useRef<HTMLInputElement>(null); 
 const markdownRef = useRef<HTMLTextAreaElement>(null);
 
-const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+const [selectedTags, setSelectedTags] = useState<Tag[]>(tags); //initializing selectedTags with tags passed as props
 const navigate = useNavigate()
 
 
@@ -44,7 +45,7 @@ function handleSubmit(e: React.FormEvent) {
         <Col>
         <Form.Group controlId="title">
           <Form.Label>Title</Form.Label>
-          <Form.Control required ref={titleRef} />
+          <Form.Control required ref={titleRef} defaultValue={title}/>
         </Form.Group>
       </Col>
         <Col>
@@ -78,7 +79,7 @@ function handleSubmit(e: React.FormEvent) {
        </Row>
          <Form.Group controlId="markdown">
           <Form.Label>Body</Form.Label>
-          <Form.Control required as="textarea" rows={15} ref={markdownRef} />
+          <Form.Control required as="textarea" rows={15} ref={markdownRef} defaultValue={markdown}/>
         </Form.Group>
         <Stack direction="horizontal" gap={2} className="justify-content-end">
           <Button type="submit" variant="primary">
